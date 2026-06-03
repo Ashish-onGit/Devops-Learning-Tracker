@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
+
+/* Custom Glassmorphism styles (Optimized for tactile AMOLED depth) */
+.glass-panel {
+  @apply bg-white/90 dark:bg-[#0A0A0A] border border-slate-200/50 dark:border-[#202020] shadow-sm;
+}
+
+.glass-card {
+  @apply bg-white/95 dark:bg-[#0A0A0A] border border-slate-200/50 dark:border-[#202020] shadow-md rounded-xl transition-all duration-200 hover:shadow-lg dark:hover:shadow-black/80 hover:-translate-y-[1.5px] hover:border-slate-300 dark:hover:border-[#333333];
+}
+
+.glass-nav {
+  @apply bg-white/80 dark:bg-black/80 border-b border-slate-200/50 dark:border-[#202020] backdrop-blur-md;
+}
+
+/* OLED/AMOLED Surface Tweaks */
+.dark body {
+  background-color: #000000 !important;
+}
+
+.dark aside {
+  background-color: #050505 !important;
+  border-color: #202020 !important;
+}
+
+.dark header {
+  background-color: rgba(5, 5, 5, 0.8) !important;
+  border-color: #202020 !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* Command Palette Specific */
+.dark .command-palette-backdrop {
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+.dark .command-palette-modal {
+  background-color: #0A0A0A !important;
+  border-color: #222222 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.95) !important;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 dark:bg-slate-800 rounded-full hover:bg-slate-400 dark:hover:bg-slate-700;
+}
+
+/* UX Polish: Global Cursors & Click Feedback */
+
+button,
+a,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.cursor-pointer {
+  cursor: pointer !important;
+}
+
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="date"],
+textarea {
+  cursor: text;
+}
+
+:disabled,
+[disabled],
+.cursor-not-allowed {
+  cursor: not-allowed !important;
+}
+
+/* Smooth transition for active click states */
+button,
+a,
+[role="button"],
+.cursor-pointer {
+  transition: transform 0.1s ease, opacity 0.1s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+button:active:not(:disabled),
+a:active,
+[role="button"]:active,
+.cursor-pointer:active {
+  transform: scale(0.975);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Roadmap Grid-Mesh Background styling */
+.roadmap-mesh-container {
+  background-color: #000000 !important;
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
+    radial-gradient(at 85% 45%, rgba(139, 92, 246, 0.05) 0px, transparent 50%),
+    radial-gradient(at 35% 85%, rgba(16, 185, 129, 0.04) 0px, transparent 50%),
+    linear-gradient(to right, rgba(32, 32, 32, 0.18) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(32, 32, 32, 0.18) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px !important;
+}
+
+/* Roadmap Glowing Milestone Nodes */
+@keyframes in-progress-pulse {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.15), inset 0 0 4px rgba(245, 158, 11, 0.05);
+    border-color: rgba(245, 158, 11, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.4), inset 0 0 8px rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.8);
+  }
+}
+
+.in-progress-glow {
+  animation: in-progress-pulse 2s infinite ease-in-out;
+}
+
+@keyframes mastered-gold-pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.15), inset 0 0 4px rgba(234, 179, 8, 0.05);
+    border-color: rgba(234, 179, 8, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.45), inset 0 0 10px rgba(234, 179, 8, 0.2);
+    border-color: rgba(234, 179, 8, 0.9);
+  }
+}
+
+.mastered-gold-glow {
+  animation: mastered-gold-pulse 2.2s infinite ease-in-out;
+}
+

@@ -64,4 +64,5 @@ const startServer = async () => {
   });
 };
 
+// Nodemon hot reload trigger comment for new env variables
 startServer();

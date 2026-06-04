@@ -390,6 +390,9 @@ const seedData = {
   tools: [
     {
       toolName: "Docker",
+      name: "Docker",
+      category: "Containers",
+      features: ["Containerization", "Layered filesystem", "Isolated networks", "Docker Hub"],
       overview: "Standard lightweight software containerization engine.",
       installation: {
         linux: "sudo apt-get update && sudo apt-get install docker.io -y\nsudo systemctl enable --now docker",
@@ -421,6 +424,9 @@ const seedData = {
     },
     {
       toolName: "Kubernetes",
+      name: "Kubernetes",
+      category: "Orchestration",
+      features: ["Self-healing", "Auto-scaling", "Service discovery", "Secret/Config management"],
       overview: "Enterprise-grade container orchestration system to automate deployment, scaling, and management of containerized apps.",
       installation: {
         linux: "curl -LO 'https://dl.k8s.io/release/v1.29.0/bin/linux/amd64/kubectl'\nsudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl",
@@ -452,6 +458,9 @@ const seedData = {
     },
     {
       toolName: "Terraform",
+      name: "Terraform",
+      category: "IaC",
+      features: ["Declarative configuration", "State tracking", "Multi-cloud providers", "Dependency graphs"],
       overview: "Infrastructure as Code tool to build, change, and version cloud infrastructure safely and efficiently.",
       installation: {
         linux: "wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg\necho \"deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main\" | sudo tee /etc/apt/sources.list.d/hashicorp.list\nsudo apt update && sudo apt install terraform",
@@ -611,6 +620,78 @@ const seedData = {
         { name: "Read, generate, and modify configuration", weight: "26%" }
       ],
       resources: ["HashiCorp Developer Tutorials", "Official Terraform Associate Exam Prep"]
+    }
+  ],
+  resources: [
+    {
+      title: "awesome-devops",
+      type: "repo",
+      category: "General",
+      url: "https://github.com/Jitsusama/awesome-devops",
+      description: "A curated list of awesome DevOps platforms, tools, frameworks, and resources.",
+      owner: "Jitsusama",
+      stars: "14.2k",
+      forks: "2.5k"
+    },
+    {
+      title: "kubernetes",
+      type: "repo",
+      category: "Containers",
+      url: "https://github.com/kubernetes/kubernetes",
+      description: "Production-Grade Container Scheduling and Management System.",
+      owner: "kubernetes",
+      stars: "105.4k",
+      forks: "38.2k"
+    },
+    {
+      title: "terraform-provider-aws",
+      type: "repo",
+      category: "IaC",
+      url: "https://github.com/hashicorp/terraform-provider-aws",
+      description: "The Terraform AWS provider allows Terraform to configure AWS infrastructure.",
+      owner: "hashicorp",
+      stars: "9.8k",
+      forks: "4.1k"
+    },
+    {
+      title: "How We Scaled Our Kubernetes Cluster to 5,000 Nodes",
+      type: "article",
+      category: "Containers",
+      url: "https://dev.to/t/devops",
+      description: "An in-depth writeup on scaling large-scale Kubernetes clusters to run workloads with minimal overhead.",
+      author: "David Vance",
+      source: "Dev.to",
+      likes: 342,
+      comments: 48,
+      readTime: "6 min read"
+    },
+    {
+      title: "Mastering Terraform State: Common Anti-patterns and Solutions",
+      type: "article",
+      category: "IaC",
+      url: "https://medium.com/tag/devops",
+      description: "A deep dive into remote state locking, state migration strategies, and state recovery commands.",
+      author: "Helen Park",
+      source: "Medium / DevOps",
+      likes: 219,
+      comments: 15,
+      readTime: "8 min read"
+    }
+  ],
+  notes: [
+    {
+      id: "note-1",
+      title: "Docker Networking Cheat Sheet",
+      content: "# Docker Networking\n\n- Bridge: Default driver for container communication on same host\n- Host: Bypasses container network isolation, shares host's network namespace\n- Overlay: Multi-host networking for Swarm clusters\n- None: Disables all networking for container",
+      category: "Containers",
+      tags: ["docker", "networking"]
+    },
+    {
+      id: "note-2",
+      title: "Kubernetes Commands Cheat Sheet",
+      content: "# K8s Cheat Sheet\n\n```bash\nkubectl get pods -n kube-system\nkubectl describe pod <pod-name>\nkubectl logs -f <pod-name>\n```",
+      category: "Orchestration",
+      tags: ["k8s", "cheat-sheet"]
     }
   ]
 };

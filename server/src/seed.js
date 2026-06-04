@@ -11,6 +11,8 @@ const InterviewQuestion = require('./models/InterviewQuestion');
 const ToolGuide = require('./models/ToolGuide');
 const Project = require('./models/Project');
 const CertificationPath = require('./models/CertificationPath');
+const Note = require('./models/Note');
+const Resource = require('./models/Resource');
 
 const seedData = require('./data/seedData');
 
@@ -28,6 +30,8 @@ const seedDB = async () => {
     await ToolGuide.deleteMany({});
     await Project.deleteMany({});
     await CertificationPath.deleteMany({});
+    await Note.deleteMany({});
+    await Resource.deleteMany({});
 
     console.log('Inserting Topics...');
     await Topic.insertMany(seedData.topics);
@@ -49,6 +53,16 @@ const seedDB = async () => {
 
     console.log('Inserting Certifications...');
     await CertificationPath.insertMany(seedData.certifications);
+
+    console.log('Inserting Notes...');
+    if (seedData.notes && seedData.notes.length > 0) {
+      await Note.insertMany(seedData.notes);
+    }
+
+    console.log('Inserting Resources...');
+    if (seedData.resources && seedData.resources.length > 0) {
+      await Resource.insertMany(seedData.resources);
+    }
 
     console.log('Database seeding complete!');
     process.exit(0);

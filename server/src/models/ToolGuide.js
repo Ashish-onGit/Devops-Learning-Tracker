@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 const ToolGuideSchema = new mongoose.Schema({
-  toolName: { type: String, required: true, unique: true }, 
+  toolName: { type: String, required: true, unique: true },
+  name: { type: String }, // Alias/fallback field for toolName
+  category: { type: String }, // e.g. Containers, Orchestration, CI/CD
+  features: [{ type: String }], // List of features
   overview: { type: String, required: true },
   installation: {
     linux: String,

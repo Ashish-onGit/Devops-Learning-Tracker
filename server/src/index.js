@@ -12,6 +12,7 @@ const logger = require('./middleware/logger');
 const errorHandler = require('./middleware/errorHandler');
 const dataService = require('./services/dataService');
 const apiRoutes = require('./routes/api');
+const autoSeed = require('./utils/autoSeed');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,10 +20,31 @@ const PORT = process.env.PORT || 5000;
 app.use(helmet({
   contentSecurityPolicy: false
 }));
-app.use(cors({
-  origin: 'https://devops-learning-tracker-delta.vercel.app'
-  
 
+const allowedOrigins = [
+  'https://devops-learning-tracker-delta.vercel.app',
+  'https://devops-learning-tracker.vercel.app',
+  'http://localhost:3000',
+  'http://localhost:5173',
+  'http://127.0.0.1:3000',
+  'http://127.0.0.1:5173'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const isAllowed = allowedOrigins.includes(origin) || 
+                      /^https:\/\/devops-learning-tracker-.*\.vercel\.app$/.test(origin);
+                      
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 }));
 
 app.use(express.json());
@@ -59,10 +81,13 @@ const startServer = async () => {
   const isConnected = await connectDB();
   dataService.setDbStatus(isConnected);
 
+  if (isConnected) {
+    await autoSeed();
+  }
+
   app.listen(PORT, () => {
     console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
   });
 };
 
-// Nodemon hot reload trigger comment for new env variables
 startServer();

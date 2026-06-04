@@ -206,7 +206,7 @@ ${content}`;
               placeholder="Search notes..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-1.5 text-xs rounded-lg border border-slate-200/50 dark:border-[#202020] bg-slate-550/20 dark:bg-[#050505] focus:ring-1 focus:ring-blue-500 focus:outline-none"
+              className="w-full pl-9 pr-4 py-1.5 text-xs rounded-lg border border-slate-200/50 dark:border-[#202020] bg-slate-100/50 dark:bg-[#050505] focus:ring-1 focus:ring-blue-500 focus:outline-none"
             />
           </div>
         </div>
@@ -220,7 +220,7 @@ ${content}`;
               className={`px-3 py-1 rounded-full text-[10px] font-bold border transition ${
                 activeCategory === cat
                   ? "bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-950 dark:border-white"
-                  : "text-slate-500 border-slate-200/50 dark:border-[#202020] hover:bg-slate-550 dark:hover:bg-[#151515]"
+                  : "text-slate-500 border-slate-200/50 dark:border-[#202020] hover:bg-slate-100 dark:hover:bg-[#151515]"
               }`}
             >
               {cat}

@@ -142,9 +142,9 @@ const Layout = ({ children }) => {
             onClick={openSearch}
             className="w-full border-b mb-2 border-slate-200 dark:border-slate-800 flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white transition-all select-none"
           >
-            <Search className="w-4 h-4 text-slate-455 " />
+            <Search className="w-4 h-4 text-slate-400 " />
             <span>Quick Search</span>
-            <kbd className="ml-auto font-sans text-[10px] bg-slate-200 dark:bg-slate-850 px-1.5 py-0.5 rounded text-slate-550 border dark:border-slate-800">
+            <kbd className="ml-auto font-sans text-[10px] bg-slate-200 dark:bg-slate-850 px-1.5 py-0.5 rounded text-slate-500 border dark:border-slate-800">
               ⌘K
             </kbd>
           </button>
@@ -162,7 +162,7 @@ const Layout = ({ children }) => {
                 }`}
               >
                 <item.icon
-                  className={`w-4 h-4 ${isActive ? "text-white" : "text-slate-455"}`}
+                  className={`w-4 h-4 ${isActive ? "text-white" : "text-slate-400"}`}
                 />
                 {item.name}
               </Link>
@@ -224,7 +224,7 @@ const Layout = ({ children }) => {
             {/* Search Input button trigger */}
             <div
               onClick={openSearch}
-              className="relative hidden sm:flex w-64 pl-9 pr-4 py-1.5 text-xs rounded-lg bg-slate-100 dark:bg-black border border-slate-200 dark:border-slate-800 text-slate-550 hover:bg-slate-200/50 dark:hover:bg-slate-850/50 cursor-pointer select-none items-center"
+              className="relative hidden sm:flex w-64 pl-9 pr-4 py-1.5 text-xs rounded-lg bg-slate-100 dark:bg-black border border-slate-200 dark:border-slate-800 text-slate-500 hover:bg-slate-200/50 dark:hover:bg-slate-850/50 cursor-pointer select-none items-center"
             >
               <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
               <span>Quick Search...</span>
@@ -248,7 +248,7 @@ const Layout = ({ children }) => {
         </header>
 
         {/* Content Body (Only this area scrolls) */}
-        <main className="flex-1 p-6 overflow-y-auto bg-slate-50/50 dark:bg-black">
+        <main className="flex-1 p-6 overflow-y-auto bg-slate-50 dark:bg-black">
           {children}
         </main>
       </div>

@@ -360,7 +360,7 @@ const TopicDetail = () => {
                               <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
                             </span>
                           ) : (
-                            <span className="w-3.5 h-3.5 rounded-full border border-slate-250 dark:border-slate-700 flex-shrink-0" />
+                            <span className="w-3.5 h-3.5 rounded-full border border-slate-300 dark:border-slate-700 flex-shrink-0" />
                           )}
                           <span className="truncate">{sibling.title}</span>
                         </div>
@@ -519,7 +519,7 @@ const TopicDetail = () => {
                       </div>
                       <button
                         onClick={() => handleCopyCommand(cmd.command, idx)}
-                        className="p-2 rounded bg-slate-250 hover:bg-slate-300 dark:bg-[#1A1A1A] dark:hover:bg-[#252525] text-slate-600 dark:text-slate-400 flex items-center justify-center self-end md:self-auto border border-slate-300 dark:border-[#333333]"
+                        className="p-2 rounded bg-slate-100 hover:bg-slate-200 dark:bg-[#1A1A1A] dark:hover:bg-[#252525] text-slate-600 dark:text-slate-400 flex items-center justify-center self-end md:self-auto border border-slate-300 dark:border-[#333333]"
                       >
                         {copiedIndex === idx ? (
                           <Check className="w-3.5 h-3.5 text-emerald-500" />
@@ -675,7 +675,7 @@ const TopicDetail = () => {
 
                           {/* Explanation */}
                           {quizSubmitted && q.explanation && (
-                            <p className="text-[10px] text-slate-550 dark:text-slate-400 leading-relaxed bg-slate-50/50 dark:bg-[#111111]/30 p-2.5 rounded border border-slate-200/50 dark:border-[#202020]">
+                            <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed bg-slate-50/50 dark:bg-[#111111]/30 p-2.5 rounded border border-slate-200/50 dark:border-[#202020]">
                               <b>Explanation:</b> {q.explanation}
                             </p>
                           )}
@@ -701,14 +701,14 @@ const TopicDetail = () => {
                         setSelectedAnswers({});
                         setQuizSubmitted(false);
                       }}
-                      className="w-full py-2.5 border border-slate-350 dark:border-slate-700 font-bold text-xs rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700"
+                      className="w-full py-2.5 border border-slate-300 dark:border-slate-700 font-bold text-xs rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700"
                     >
                       Retake Quiz Assessment
                     </button>
                   )}
                 </div>
               ) : (
-                <p className="text-xs text-slate-550">
+                <p className="text-xs text-slate-500">
                   No quiz loaded for this specific topic.
                 </p>
               )}
@@ -795,7 +795,7 @@ const TopicDetail = () => {
                   />
                 </button>
               </div>
-              <h3 className="text-sm font-black text-slate-200">{currentCategory}</h3>
+              <h3 className="text-sm font-black text-slate-800 dark:text-slate-200">{currentCategory}</h3>
               {/* Progress Bar */}
               {!learningPathCollapsed && (
                 <div className="pt-2">
@@ -847,11 +847,11 @@ const TopicDetail = () => {
                             <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
                           </span>
                         ) : (
-                          <span className="w-3.5 h-3.5 rounded-full border border-slate-250 dark:border-slate-700 flex-shrink-0" />
+                          <span className="w-3.5 h-3.5 rounded-full border border-slate-300 dark:border-slate-700 flex-shrink-0" />
                         )}
                         <span className="truncate">{sibling.title}</span>
                       </div>
-                      {isLocked && <Lock className="w-3.5 h-3.5 text-slate-400 dark:text-slate-550" />}
+                      {isLocked && <Lock className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />}
                     </Link>
                   );
                 })}

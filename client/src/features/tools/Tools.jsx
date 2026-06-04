@@ -183,7 +183,7 @@ const Tools = () => {
                   Installation guidelines
                 </h3>
                 <div className="border border-slate-200/50 dark:border-[#202020] rounded-xl overflow-hidden">
-                  <div className="flex bg-slate-555 dark:bg-[#111111]/45 border-b border-slate-200/50 dark:border-[#202020] px-2 py-1 text-[10px] font-bold">
+                  <div className="flex bg-slate-100 dark:bg-[#111111]/45 border-b border-slate-200/50 dark:border-[#202020] px-2 py-1 text-[10px] font-bold">
                     <button
                       onClick={() => setActiveInstallTab("linux")}
                       className={`px-3 py-1.5 rounded transition ${
@@ -303,7 +303,7 @@ const Tools = () => {
               )}
               {activeTool.alternatives?.length > 0 && (
                 <div className="p-5 rounded-xl glass-card">
-                  <h4 className="text-xs font-bold text-slate-700 dark:text-slate-355 mb-2">
+                  <h4 className="text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">
                     Alternatives
                   </h4>
                   <ul className="list-disc pl-4 space-y-1.5 text-xs text-slate-500 dark:text-slate-400">
@@ -328,10 +328,10 @@ const Tools = () => {
                       key={idx}
                       className="p-4 rounded-xl glass-card text-xs"
                     >
-                      <p className="font-bold mb-1.5 text-slate-750 dark:text-slate-200">
+                      <p className="font-bold mb-1.5 text-slate-800 dark:text-slate-200">
                         Q: {q.question}
                       </p>
-                      <p className="text-slate-505 dark:text-slate-400 leading-relaxed bg-slate-50/50 dark:bg-[#111111]/30 p-2.5 rounded border border-slate-200/50 dark:border-[#202020]">
+                      <p className="text-slate-500 dark:text-slate-400 leading-relaxed bg-slate-50/50 dark:bg-[#111111]/30 p-2.5 rounded border border-slate-200/50 dark:border-[#202020]">
                         {q.answer}
                       </p>
                     </div>

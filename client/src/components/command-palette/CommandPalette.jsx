@@ -326,7 +326,7 @@ const CommandPalette = ({ isOpen, onClose }) => {
                 <div className="space-y-1">
                   {/* Title labels for sections if not searching */}
                   {!query.trim() && (
-                    <div className="px-3 py-1.5 text-[10px] font-bold text-slate-455 uppercase select-none">
+                    <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase select-none">
                       Dashboard Quick Actions & Suggestions
                     </div>
                   )}

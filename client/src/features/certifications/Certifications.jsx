@@ -117,7 +117,7 @@ const Certifications = () => {
                     className={`w-full text-left px-4 py-3.5 rounded-lg text-xs font-bold transition flex items-center justify-between select-none ${
                       isSelected
                         ? "bg-blue-600 text-white shadow-md shadow-blue-500/10"
-                        : "text-slate-600 dark:text-slate-400 hover:bg-slate-550 dark:hover:bg-[#151515]"
+                        : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#151515]"
                     }`}
                   >
                     <div className="space-y-0.5">

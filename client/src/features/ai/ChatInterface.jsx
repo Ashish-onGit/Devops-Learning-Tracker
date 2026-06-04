@@ -90,7 +90,7 @@ const ChatInterface = () => {
             onClick={regenerateResponse}
             disabled={loading || messages.length <= 1}
             title="Regenerate last response"
-            className="p-2 rounded-lg border border-slate-200/50 dark:border-[#202020] hover:bg-slate-550 dark:hover:bg-[#151515] text-slate-500 disabled:opacity-50 flex items-center justify-center"
+            className="p-2 rounded-lg border border-slate-200/50 dark:border-[#202020] hover:bg-slate-100 dark:hover:bg-[#151515] text-slate-500 disabled:opacity-50 flex items-center justify-center"
           >
             <RotateCcw className="w-4 h-4" />
           </button>
@@ -158,7 +158,7 @@ const ChatInterface = () => {
         {/* Live typing/streaming placeholder bubble */}
         {streamingContent && (
           <div className="flex gap-3 max-w-3xl mr-auto">
-            <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#050505] text-slate-555 flex items-center justify-center font-bold text-xs shrink-0 border border-slate-200/50 dark:border-[#202020]">
+            <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#050505] text-slate-500 flex items-center justify-center font-bold text-xs shrink-0 border border-slate-200/50 dark:border-[#202020]">
               AI
             </div>
             <div className="p-4 rounded-2xl border border-slate-200/50 dark:border-[#202020] bg-slate-50/50 dark:bg-[#111111]/80 text-xs leading-relaxed space-y-3 shadow-sm">
@@ -176,13 +176,13 @@ const ChatInterface = () => {
       {/* Suggested Quick Prompts pills */}
       {messages.length === 1 && !streamingContent && (
         <div className="p-4 border-t border-slate-200/50 dark:border-[#202020] select-none">
-          <p className="text-[10px] font-bold text-slate-455 uppercase mb-2.5">Suggested tutoring topics</p>
+          <p className="text-[10px] font-bold text-slate-400 uppercase mb-2.5">Suggested tutoring topics</p>
           <div className="flex flex-wrap gap-2">
             {presets.map((preset, pIdx) => (
               <button
                 key={pIdx}
                 onClick={() => handlePresetClick(preset.text)}
-                className="px-3.5 py-2 rounded-xl border border-slate-200/50 dark:border-[#202020] hover:bg-slate-550 dark:hover:bg-[#151515] dark:bg-zinc-800 dark:text-zinc-500  dark:hover:text-zinc-100 text-[11px] font-bold text-slate-600 dark:text-zinc-200 transition flex items-center gap-1.5"
+                className="px-3.5 py-2 rounded-xl border border-slate-200/50 dark:border-[#202020] hover:bg-slate-100 dark:hover:bg-[#151515] dark:bg-zinc-800 dark:text-zinc-500  dark:hover:text-zinc-100 text-[11px] font-bold text-slate-600 dark:text-zinc-200 transition flex items-center gap-1.5"
               >
                 <preset.icon className="w-3.5 h-3.5 text-slate-450" />
                 {preset.text}

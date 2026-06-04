@@ -189,7 +189,7 @@ const Projects = () => {
                       <div className="px-5 pb-5 border-t border-slate-200/50 dark:border-[#202020] pt-4 space-y-4 text-xs">
                         {/* Goal */}
                         <div className="space-y-1.5">
-                          <h4 className="font-bold text-slate-750 dark:text-slate-300">
+                          <h4 className="font-bold text-slate-800 dark:text-slate-300">
                             Project Goal
                           </h4>
                           <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -212,7 +212,7 @@ const Projects = () => {
                         {/* Checklist Steps */}
                         {proj.steps?.length > 0 && (
                           <div className="space-y-2">
-                            <h4 className="font-bold text-slate-750 dark:text-slate-300">
+                            <h4 className="font-bold text-slate-800 dark:text-slate-300">
                               Implementation Steps
                             </h4>
                             <div className="space-y-1.5 select-none">
@@ -264,7 +264,7 @@ const Projects = () => {
                         {/* Expected outcome & Action */}
                         <div className="space-y-3 pt-3 border-t border-slate-200/50 dark:border-[#202020] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                           <div className="flex-1">
-                            <h4 className="font-bold text-slate-750 dark:text-slate-355">
+                            <h4 className="font-bold text-slate-800 dark:text-slate-300">
                               Expected Outcome
                             </h4>
                             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">

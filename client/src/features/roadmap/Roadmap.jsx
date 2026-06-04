@@ -269,7 +269,7 @@ const Roadmap = () => {
           statusTagBg: 'bg-slate-100 dark:bg-[#111111] border-slate-200 dark:border-[#202020]',
           statusTagColor: 'text-slate-400 dark:text-slate-500',
           diffColor: 'text-slate-400 dark:text-slate-650',
-          badge: <Lock className="w-3 h-3 text-slate-550" />
+          badge: <Lock className="w-3 h-3 text-slate-400" />
         };
       case 'available':
       default:
@@ -414,8 +414,8 @@ const Roadmap = () => {
               <div className="flex items-start justify-between">
                 <div className="space-y-1">
                   <span className="text-[10px] bg-blue-500/10 text-blue-400 font-bold px-2 py-0.5 rounded uppercase tracking-wider">Active Learning Profile</span>
-                  <h3 className="text-lg font-extrabold text-slate-100 flex items-center gap-1.5">
-                    Level {gamification.level}: <span className="text-blue-400">{gamification.levelName}</span>
+                  <h3 className="text-lg font-extrabold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                    Level {gamification.level}: <span className="text-blue-600 dark:text-blue-400">{gamification.levelName}</span>
                   </h3>
                 </div>
                 <div className="flex items-center gap-1 text-xs text-orange-500 font-bold bg-orange-500/5 px-2.5 py-1 rounded-full border border-orange-500/10">
@@ -449,18 +449,18 @@ const Roadmap = () => {
               </div>
 
               {/* Stats overview */}
-              <div className="grid grid-cols-3 gap-4 border-t border-slate-800/50 pt-3.5 mt-4 text-center">
+              <div className="grid grid-cols-3 gap-4 border-t border-slate-200 dark:border-slate-800/50 pt-3.5 mt-4 text-center">
                 <div>
                   <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Completed</p>
-                  <p className="text-sm font-black text-slate-200">{completedCount} Topics</p>
+                  <p className="text-sm font-black text-slate-800 dark:text-slate-200">{completedCount} Topics</p>
                 </div>
                 <div>
                   <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Projects</p>
-                  <p className="text-sm font-black text-slate-200">{completedProjects.length} Done</p>
+                  <p className="text-sm font-black text-slate-800 dark:text-slate-200">{completedProjects.length} Done</p>
                 </div>
                 <div>
                   <p className="text-[9px] text-slate-500 font-bold uppercase tracking-wider">Notes Written</p>
-                  <p className="text-sm font-black text-slate-200">{notes.length} Pages</p>
+                  <p className="text-sm font-black text-slate-800 dark:text-slate-200">{notes.length} Pages</p>
                 </div>
               </div>
             </div>
@@ -659,7 +659,7 @@ const Roadmap = () => {
                                   state === 'completed' || state === 'mastered'
                                     ? 'bg-gradient-to-r from-blue-500 to-emerald-500'
                                     : state === 'in_progress'
-                                    ? 'bg-gradient-to-r from-slate-700 to-amber-500'
+                                    ? 'bg-gradient-to-r from-slate-300 to-amber-500 dark:from-slate-700 dark:to-amber-500'
                                     : 'bg-slate-200 dark:bg-[#202020]'
                                 } z-0`}
                               />
@@ -696,7 +696,7 @@ const Roadmap = () => {
                                   </h4>
 
                                   {/* Bottom: Difficulty & Estimated Time */}
-                                  <div className="mt-3 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/40 pt-2 text-[9px] font-bold text-slate-550 dark:text-slate-550">
+                                  <div className="mt-3 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/40 pt-2 text-[9px] font-bold text-slate-500 dark:text-slate-400">
                                     <span className={styles.iconColor}>{topic.difficulty}</span>
                                     <span className="flex items-center gap-1">
                                       <Clock className="w-3 h-3 text-slate-400 dark:text-slate-500" />
@@ -748,7 +748,7 @@ const Roadmap = () => {
                             {catIdx + 1}
                           </span>
                           <span className="text-slate-800 dark:text-slate-200 font-extrabold">{cat}</span>
-                          <span className="text-[9px] font-bold bg-slate-100 dark:bg-[#111111] px-2.5 py-0.5 rounded border border-slate-200 dark:border-[#202020] text-slate-550 dark:text-slate-400">
+                          <span className="text-[9px] font-bold bg-slate-100 dark:bg-[#111111] px-2.5 py-0.5 rounded border border-slate-200 dark:border-[#202020] text-slate-500 dark:text-slate-400">
                             {completedCountInCat} / {catTopics.length} Completed
                           </span>
                         </div>
@@ -777,7 +777,7 @@ const Roadmap = () => {
                                 </div>
                                 <div className="min-w-0 flex-1">
                                   <h4 className="font-extrabold text-xs text-slate-800 dark:text-slate-200 truncate">{topic.title}</h4>
-                                  <p className="text-[10px] text-slate-505 dark:text-slate-500 truncate mt-0.5">{topic.summary}</p>
+                                  <p className="text-[10px] text-slate-500 dark:text-slate-500 truncate mt-0.5">{topic.summary}</p>
                                 </div>
                               </div>
                             );
@@ -797,7 +797,7 @@ const Roadmap = () => {
                 <div className="p-4 rounded-xl border border-slate-200 dark:border-[#202020] bg-slate-50 dark:bg-[#050505] space-y-4">
                   <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#202020] pb-2">
                     <span className="text-xs font-bold text-slate-700 dark:text-slate-350 uppercase flex items-center gap-1.5"><HelpIcon className="w-4 h-4 text-blue-500" /> Available (Locked)</span>
-                    <span className="text-[9px] font-bold bg-slate-100 dark:bg-[#111111] border dark:border-slate-800 px-2 py-0.5 rounded text-slate-550">
+                    <span className="text-[9px] font-bold bg-slate-100 dark:bg-[#111111] border dark:border-slate-800 px-2 py-0.5 rounded text-slate-500">
                       {filteredTopics.filter(t => getTopicState(t) === 'available' || getTopicState(t) === 'locked').length}
                     </span>
                   </div>
@@ -820,7 +820,7 @@ const Roadmap = () => {
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">{topic.title}</p>
-                            <p className="text-[9px] text-slate-505 uppercase mt-0.5">{topic.difficulty}</p>
+                            <p className="text-[9px] text-slate-500 uppercase mt-0.5">{topic.difficulty}</p>
                           </div>
                         </div>
                       );
@@ -832,7 +832,7 @@ const Roadmap = () => {
                 <div className="p-4 rounded-xl border border-slate-200 dark:border-[#202020] bg-slate-50 dark:bg-[#050505] space-y-4">
                   <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#202020] pb-2">
                     <span className="text-xs font-bold text-slate-700 dark:text-slate-350 uppercase flex items-center gap-1.5"><Flame className="w-4 h-4 text-amber-500 animate-pulse" /> In Progress</span>
-                    <span className="text-[9px] font-bold bg-slate-100 dark:bg-[#111111] border dark:border-slate-800 px-2 py-0.5 rounded text-slate-555">
+                    <span className="text-[9px] font-bold bg-slate-100 dark:bg-[#111111] border dark:border-slate-800 px-2 py-0.5 rounded text-slate-500">
                       {filteredTopics.filter(t => getTopicState(t) === 'in_progress').length}
                     </span>
                   </div>
@@ -867,7 +867,7 @@ const Roadmap = () => {
                 <div className="p-4 rounded-xl border border-slate-200 dark:border-[#202020] bg-slate-50 dark:bg-[#050505] space-y-4">
                   <div className="flex items-center justify-between border-b border-slate-200 dark:border-[#202020] pb-2">
                     <span className="text-xs font-bold text-slate-700 dark:text-slate-350 uppercase flex items-center gap-1.5"><CheckCircle className="w-4 h-4 text-emerald-500" /> Completed</span>
-                    <span className="text-[9px] font-bold bg-slate-100 dark:bg-[#111111] border dark:border-slate-800 px-2 py-0.5 rounded text-slate-555">
+                    <span className="text-[9px] font-bold bg-slate-100 dark:bg-[#111111] border dark:border-slate-800 px-2 py-0.5 rounded text-slate-500">
                       {filteredTopics.filter(t => getTopicState(t) === 'completed' || getTopicState(t) === 'mastered').length}
                     </span>
                   </div>
@@ -887,11 +887,11 @@ const Roadmap = () => {
                             className="p-3.5 rounded-lg border border-slate-200 dark:border-[#202020] bg-white dark:bg-[#0A0A0A] hover:border-blue-500/35 transition cursor-pointer flex gap-3 items-center"
                           >
                             <div className={`relative w-8 h-8 rounded border flex items-center justify-center shrink-0 ${styles.iconBg} ${styles.iconColor}`}>
-                              {state === 'mastered' ? <Star className="w-3.5 h-3.5 text-purple-400 fill-current text-[#EAB308]" /> : <Check className="w-3.5 h-3.5 text-emerald-500 stroke-[3]" />}
+                              {state === 'mastered' ? <Star className="w-3.5 h-3.5 text-yellow-500 fill-current" /> : <Check className="w-3.5 h-3.5 text-emerald-500 stroke-[3]" />}
                             </div>
                             <div className="min-w-0 flex-1">
                               <p className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">{topic.title}</p>
-                              <p className="text-[9px] text-slate-550 uppercase mt-0.5">{topic.difficulty}</p>
+                              <p className="text-[9px] text-slate-500 uppercase mt-0.5">{topic.difficulty}</p>
                             </div>
                           </div>
                         );
@@ -958,7 +958,7 @@ const Roadmap = () => {
 
                   <div className="space-y-2">
                     <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Concept Summary</h4>
-                    <p className="text-xs text-slate-650 dark:text-slate-400 leading-relaxed bg-slate-50 dark:bg-[#000000] p-4 rounded-xl border border-slate-200 dark:border-[#202020]">
+                    <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed bg-slate-50 dark:bg-[#000000] p-4 rounded-xl border border-slate-200 dark:border-[#202020]">
                       {selectedTopic.summary}
                     </p>
                   </div>
@@ -977,7 +977,7 @@ const Roadmap = () => {
                         ? ['Declarative state', 'Provider setups', 'Variables modules', 'Plan executions']
                         : ['DevOps automation', 'CI/CD flows', 'Cloud networking', 'Config states']
                       ).map(skill => (
-                        <div key={skill} className="p-2 rounded-lg bg-slate-50 dark:bg-[#0A0A0A] border border-slate-200 dark:border-[#202020] flex items-center gap-1.5 text-[10px] font-bold text-slate-655 dark:text-slate-350">
+                        <div key={skill} className="p-2 rounded-lg bg-slate-50 dark:bg-[#0A0A0A] border border-slate-200 dark:border-[#202020] flex items-center gap-1.5 text-[10px] font-bold text-slate-600 dark:text-slate-350">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
                           <span>{skill}</span>
                         </div>
@@ -987,23 +987,23 @@ const Roadmap = () => {
 
                   {/* Quick Counters */}
                   <div className="grid grid-cols-3 gap-3 border-t border-slate-200 dark:border-slate-800/50 pt-4 mt-4 text-center">
-                    <div className="p-3 bg-slate-50 dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-[#202020]">
+                     <div className="p-3 bg-slate-50 dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-[#202020]">
                       <p className="text-[8px] text-slate-500 font-bold uppercase tracking-wider">Quizzes</p>
-                      <p className="text-xs font-black text-slate-750 dark:text-slate-300 mt-1">1 Test</p>
+                      <p className="text-xs font-black text-slate-700 dark:text-slate-300 mt-1">1 Test</p>
                     </div>
                     <div className="p-3 bg-slate-50 dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-[#202020]">
                       <p className="text-[8px] text-slate-500 font-bold uppercase tracking-wider">Projects</p>
-                      <p className="text-xs font-black text-slate-750 dark:text-slate-300 mt-1">1 Build</p>
+                      <p className="text-xs font-black text-slate-700 dark:text-slate-300 mt-1">1 Build</p>
                     </div>
                     <div className="p-3 bg-slate-50 dark:bg-[#0A0A0A] rounded-xl border border-slate-200 dark:border-[#202020]">
                       <p className="text-[8px] text-slate-500 font-bold uppercase tracking-wider">Interview Qs</p>
-                      <p className="text-xs font-black text-slate-750 dark:text-slate-300 mt-1">1-2 Qs</p>
+                      <p className="text-xs font-black text-slate-700 dark:text-slate-300 mt-1">1-2 Qs</p>
                     </div>
                   </div>
 
                   {/* Prerequisites */}
                   {selectedTopic.prerequisites?.length > 0 && (
-                    <div className="space-y-1.5 p-3 rounded-lg border border-red-500/10 bg-red-500/5 text-[10px] text-slate-550 dark:text-slate-400 font-medium">
+                    <div className="space-y-1.5 p-3 rounded-lg border border-red-500/10 bg-red-500/5 text-[10px] text-slate-500 dark:text-slate-400 font-medium">
                       <p className="font-bold text-red-500 dark:text-red-400 uppercase tracking-wider">Prerequisite Dependencies</p>
                       <p className="mt-1">Must complete: <b>{selectedTopic.prerequisites.map(pId => {
                         const found = topics.find(t => t.id === pId);
@@ -1015,7 +1015,7 @@ const Roadmap = () => {
               </div>
 
               {/* Drawer footer CTA button */}
-              <div className="border-t border-slate-250 dark:border-[#202020] pt-4 bg-white dark:bg-[#050505] z-10 shrink-0">
+              <div className="border-t border-slate-200 dark:border-[#202020] pt-4 bg-white dark:bg-[#050505] z-10 shrink-0">
                 <button
                   onClick={() => {
                     navigate(`/topics/${selectedTopic.id}`);

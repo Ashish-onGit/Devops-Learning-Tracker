@@ -161,8 +161,8 @@ const Career = () => {
                 onClick={() => handleResumeToggle(item.id)}
                 className={`p-3 rounded-lg border cursor-pointer flex gap-3 items-center transition ${
                   item.checked 
-                    ? 'border-emerald-500/20 bg-emerald-500/5 text-slate-750' 
-                    : 'border-slate-200/50 dark:border-[#202020] hover:bg-slate-50 dark:hover:bg-[#151515] text-slate-550'
+                    ? 'border-emerald-500/20 bg-emerald-500/5 text-slate-800 dark:text-slate-200' 
+                    : 'border-slate-200/50 dark:border-[#202020] hover:bg-slate-50 dark:hover:bg-[#151515] text-slate-500'
                 }`}
               >
                 <div className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 ${
@@ -187,8 +187,8 @@ const Career = () => {
                 onClick={() => handlePortfolioToggle(item.id)}
                 className={`p-3 rounded-lg border cursor-pointer flex gap-3 items-center transition ${
                   item.checked 
-                    ? 'border-emerald-500/20 bg-emerald-500/5 text-slate-755' 
-                    : 'border-slate-200/50 dark:border-[#202020] hover:bg-slate-50 dark:hover:bg-[#151515] text-slate-550'
+                    ? 'border-emerald-500/20 bg-emerald-500/5 text-slate-800 dark:text-slate-200' 
+                    : 'border-slate-200/50 dark:border-[#202020] hover:bg-slate-50 dark:hover:bg-[#151515] text-slate-500'
                 }`}
               >
                 <div className={`w-3.5 h-3.5 rounded border flex items-center justify-center shrink-0 ${

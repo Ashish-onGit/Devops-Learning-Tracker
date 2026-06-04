@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Plus,
@@ -37,6 +37,24 @@ const Notes = () => {
   const [category, setCategory] = useState("Learning Notes");
   const [tags, setTags] = useState("");
   const [editorMode, setEditorMode] = useState("edit"); // edit, preview
+
+  const textareaRef = useRef(null);
+
+  // Auto-resize the textarea while typing (clamped between 180px and 500px)
+  useEffect(() => {
+    if (textareaRef.current && editorMode === "edit") {
+      textareaRef.current.style.height = "auto";
+      const scrollHeight = textareaRef.current.scrollHeight;
+      const newHeight = Math.min(Math.max(scrollHeight, 180), 500);
+      textareaRef.current.style.height = `${newHeight}px`;
+      
+      if (scrollHeight > 500) {
+        textareaRef.current.style.overflowY = "auto";
+      } else {
+        textareaRef.current.style.overflowY = "hidden";
+      }
+    }
+  }, [content, editorMode, selectedNoteId]);
 
   // Set initial selected note
   useEffect(() => {
@@ -347,7 +365,9 @@ ${content}`;
             <div className="flex-1 p-4 overflow-y-auto">
               {editorMode === "edit" ? (
                 <textarea
-                  className="w-full h-full bg-transparent resize-none border-none outline-none font-mono text-xs leading-relaxed focus:ring-0"
+                  ref={textareaRef}
+                  className="w-full bg-white dark:bg-[#0A0A0A] text-slate-800 dark:text-slate-200 resize-none border border-slate-200/50 dark:border-[#202020] rounded-lg p-3 outline-none font-mono text-xs leading-relaxed focus:ring-1 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all"
+                  style={{ minHeight: "180px", maxHeight: "500px", height: "180px" }}
                   placeholder="# Welcome to your markdown editor..."
                   value={content}
                   onChange={(e) => setContent(e.target.value)}

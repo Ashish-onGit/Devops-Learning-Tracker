@@ -17,6 +17,8 @@ import {
   Sparkles,
   BookMarked,
   Save,
+  ChevronDown,
+  Lock,
 } from "lucide-react";
 import { api } from "../../utils/api";
 import { toggleBookmark } from "../../store/slices/bookmarksSlice";
@@ -42,9 +44,13 @@ const TopicDetail = () => {
 
   // Component state
   const [topic, setTopic] = useState(null);
+  const [allTopics, setAllTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("theory"); // theory, commands, labs, quiz
   const [copiedIndex, setCopiedIndex] = useState(null);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [learningPathCollapsed, setLearningPathCollapsed] = useState(false);
+  const [notesCollapsed, setNotesCollapsed] = useState(false);
 
   // Quiz state
   const [selectedAnswers, setSelectedAnswers] = useState({});
@@ -57,20 +63,29 @@ const TopicDetail = () => {
   const [noteTags, setNoteTags] = useState("");
 
   useEffect(() => {
-    const fetchTopic = async () => {
+    const fetchTopicAndAll = async () => {
       setLoading(true);
-      const data = await api.getTopicById(id);
-      setTopic(data);
-      // Reset quiz
-      setSelectedAnswers({});
-      setQuizSubmitted(false);
-      setQuizScore(0);
-      setNoteTitle(`My notes on ${data?.title || "topic"}`);
-      setNoteContent("");
-      setNoteTags("");
-      setLoading(false);
+      try {
+        const [data, topicsData] = await Promise.all([
+          api.getTopicById(id),
+          api.getTopics(),
+        ]);
+        setTopic(data);
+        setAllTopics(topicsData || []);
+        // Reset quiz
+        setSelectedAnswers({});
+        setQuizSubmitted(false);
+        setQuizScore(0);
+        setNoteTitle(`My notes on ${data?.title || "topic"}`);
+        setNoteContent("");
+        setNoteTags("");
+      } catch (error) {
+        console.error("Failed to load topic details:", error);
+      } finally {
+        setLoading(false);
+      }
     };
-    fetchTopic();
+    fetchTopicAndAll();
   }, [id]);
 
   if (loading) {
@@ -204,13 +219,28 @@ const TopicDetail = () => {
     setNoteContent("");
     setNoteTags("");
   };
+  const currentCategory = topic?.category || "";
+  const siblingTopics = allTopics.filter((t) => t.category === currentCategory);
+  const totalSiblings = siblingTopics.length;
+  const completedSiblings = siblingTopics.filter(
+    (t) => completedTopics[t.id]?.completed
+  ).length;
+  const progressPercentage =
+    totalSiblings > 0 ? Math.round((completedSiblings / totalSiblings) * 100) : 0;
+
+  const currentIndex = siblingTopics.findIndex((t) => t.id === topic.id);
+  const prevTopic = currentIndex > 0 ? siblingTopics[currentIndex - 1] : null;
+  const nextTopic =
+    currentIndex !== -1 && currentIndex < siblingTopics.length - 1
+      ? siblingTopics[currentIndex + 1]
+      : null;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Left Column: Lesson Content */}
       <div className="lg:col-span-2 space-y-6">
         {/* Back Link & Title */}
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <Link
             to="/roadmap"
             className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
@@ -248,6 +278,101 @@ const TopicDetail = () => {
             </button>
           </div>
         </div>
+
+        {/* Sibling Path Chips */}
+        {siblingTopics.length > 0 && (
+          <div className="flex items-center gap-2 overflow-x-auto py-2 no-scrollbar border-b border-[#202020]">
+            {siblingTopics.map((sibling) => {
+              const isCurrent = sibling.id === topic.id;
+              const isCompletedSibling = completedTopics[sibling.id]?.completed;
+              return (
+                <Link
+                  key={sibling.id}
+                  to={`/topics/${sibling.id}`}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition border ${
+                    isCurrent
+                      ? "bg-[#1A1A1A] border-blue-500 text-blue-400"
+                      : "bg-[#0A0A0A] border-[#202020] text-slate-400 hover:bg-[#151515] hover:text-slate-200"
+                  }`}
+                >
+                  {isCompletedSibling && <Check className="w-3 h-3 text-emerald-500" />}
+                  {sibling.title}
+                </Link>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Mobile Drawer Navigation (lg:hidden) */}
+        {siblingTopics.length > 0 && (
+          <div className="lg:hidden w-full">
+            <button
+              onClick={() => setMobileDrawerOpen(!mobileDrawerOpen)}
+              className="w-full flex items-center justify-between p-3 rounded-lg border border-[#202020] bg-[#0A0A0A] text-xs font-bold text-slate-300 transition hover:bg-[#151515]"
+            >
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-blue-500" />
+                <span>Path Navigation ({completedSiblings} / {totalSiblings} Completed)</span>
+              </div>
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileDrawerOpen ? "rotate-180" : ""}`} />
+            </button>
+            
+            {mobileDrawerOpen && (
+              <div className="mt-2 p-4 rounded-lg border border-[#202020] bg-[#050505] space-y-3">
+                <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{currentCategory}</h4>
+                <div className="h-1.5 w-full bg-[#202020] rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-emerald-500 transition-all duration-500"
+                    style={{ width: `${progressPercentage}%` }}
+                  />
+                </div>
+                <div className="space-y-1 pt-2">
+                  {siblingTopics.map((sibling, index) => {
+                    const isCurrent = sibling.id === topic.id;
+                    const isCompletedSibling = completedTopics[sibling.id]?.completed;
+                    const isLocked = index > 0 && !completedTopics[siblingTopics[index - 1].id]?.completed && !isCompletedSibling && !isCurrent;
+                    
+                    return (
+                      <Link
+                        key={sibling.id}
+                        to={isLocked ? "#" : `/topics/${sibling.id}`}
+                        onClick={(e) => {
+                          if (isLocked) {
+                            e.preventDefault();
+                            toast.info(`Please complete "${siblingTopics[index - 1].title}" first!`);
+                          } else {
+                            setMobileDrawerOpen(false);
+                          }
+                        }}
+                        className={`flex items-center justify-between p-2 rounded-lg text-xs font-semibold transition ${
+                          isCurrent
+                            ? "bg-[#1A1A1A] text-blue-400"
+                            : isLocked
+                            ? "opacity-40 cursor-not-allowed text-slate-500"
+                            : "text-slate-400 hover:bg-[#151515] hover:text-slate-200"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 truncate">
+                          {isCompletedSibling ? (
+                            <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
+                          ) : isCurrent ? (
+                            <span className="w-3.5 h-3.5 rounded-full border border-blue-500 flex items-center justify-center flex-shrink-0">
+                              <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+                            </span>
+                          ) : (
+                            <span className="w-3.5 h-3.5 rounded-full border border-slate-700 flex-shrink-0" />
+                          )}
+                          <span className="truncate">{sibling.title}</span>
+                        </div>
+                        {isLocked && <Lock className="w-3.5 h-3.5 text-slate-650" />}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Content Heading Card */}
         <div className="p-6 rounded-xl glass-card space-y-2">
@@ -590,60 +715,215 @@ const TopicDetail = () => {
             </div>
           )}
         </div>
+
+        {/* Recommended Next Topic */}
+        {isCompleted && nextTopic && (
+          <div className="p-6 rounded-xl border border-emerald-500/30 bg-emerald-500/[0.02] flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-1.5 text-emerald-500 font-bold text-xs">
+                <Sparkles className="w-4 h-4" />
+                <span>Topic Completed! Ready for the next step?</span>
+              </div>
+              <h4 className="text-sm font-black text-slate-200">
+                Up Next: {nextTopic.title}
+              </h4>
+              <p className="text-[11px] text-slate-400">
+                {nextTopic.summary}
+              </p>
+            </div>
+            <Link
+              to={`/topics/${nextTopic.id}`}
+              className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-black font-extrabold text-xs rounded-lg transition shadow-lg shadow-emerald-500/10 whitespace-nowrap text-center"
+            >
+              Continue Learning
+            </Link>
+          </div>
+        )}
+
+        {/* Sequential Navigation Buttons */}
+        <div className="flex items-center justify-between gap-4 pt-6 border-t border-[#202020]">
+          {prevTopic ? (
+            <Link
+              to={`/topics/${prevTopic.id}`}
+              className="flex-1 flex items-center gap-3 p-4 rounded-xl border border-[#202020] bg-[#0A0A0A] text-left hover:bg-[#151515] transition group"
+            >
+              <ArrowLeft className="w-5 h-5 text-slate-500 group-hover:-translate-x-1 transition-transform" />
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase block">Previous Topic</span>
+                <span className="text-xs font-bold text-slate-300">{prevTopic.title}</span>
+              </div>
+            </Link>
+          ) : (
+            <div className="flex-1" />
+          )}
+
+          {nextTopic ? (
+            <Link
+              to={`/topics/${nextTopic.id}`}
+              className="flex-1 flex items-center justify-end gap-3 p-4 rounded-xl border border-[#202020] bg-[#0A0A0A] text-right hover:bg-[#151515] transition group"
+            >
+              <div>
+                <span className="text-[10px] font-bold text-slate-500 uppercase block">Next Topic</span>
+                <span className="text-xs font-bold text-slate-300">{nextTopic.title}</span>
+              </div>
+              <ArrowLeft className="w-5 h-5 text-slate-500 rotate-180 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          ) : (
+            <div className="flex-1" />
+          )}
+        </div>
       </div>
 
       {/* Right Column: Sidebar Widgets (Notes widget) */}
       <div className="space-y-6">
-        {/* Notes widget */}
-        <div className="p-5 rounded-xl glass-card space-y-4">
-          <h3 className="text-sm font-bold flex items-center gap-2">
-            <Edit3 className="w-4 h-4 text-blue-500" /> Quick Topic Notes
-          </h3>
-          <form onSubmit={handleSaveNote} className="space-y-3">
-            <div>
-              <label className="text-[10px] font-bold text-slate-400 uppercase">
-                Note Title
-              </label>
-              <input
-                type="text"
-                value={noteTitle}
-                onChange={(e) => setNoteTitle(e.target.value)}
-                className="w-full mt-1 p-2 rounded-lg border border-slate-200/50 dark:border-[#202020] bg-white dark:bg-[#050505] text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="text-[10px] font-bold text-slate-400 uppercase">
-                Your Notes (Markdown support)
-              </label>
-              <textarea
-                rows={8}
-                value={noteContent}
-                onChange={(e) => setNoteContent(e.target.value)}
-                placeholder="Type your notes on this topic. Use markdown formatting like # header or - bullet list."
-                className="w-full mt-1 p-2 rounded-lg border border-slate-200/50 dark:border-[#202020] bg-white dark:bg-[#050505] text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none font-mono"
-              />
-            </div>
-            <div>
-              <label className="text-[10px] font-bold text-slate-400 uppercase">
-                Tags (comma separated)
-              </label>
-              <input
-                type="text"
-                placeholder="commands, linux, tips"
-                value={noteTags}
-                onChange={(e) => setNoteTags(e.target.value)}
-                className="w-full mt-1 p-2 rounded-lg border border-slate-200/50 dark:border-[#202020] bg-white dark:bg-[#050505] text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none"
-              />
+        {/* Sticky Path Navigator (lg:block hidden) */}
+        {siblingTopics.length > 0 && (
+          <div className="hidden lg:block p-5 rounded-xl border border-[#202020] bg-[#0A0A0A] space-y-4 sticky top-4 z-10">
+            <div className="space-y-1 border-b border-[#202020] pb-3">
+              <div className="flex items-center justify-between" >
+                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                  Learning Path
+                </span>
+                <button
+                  onClick={() => setLearningPathCollapsed(!learningPathCollapsed)}
+                  className="p-1 rounded text-slate-400 hover:text-slate-200 transition hover:bg-[#151515]"
+                >
+                  <ChevronDown
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                      learningPathCollapsed ? "" : "rotate-180"
+                    }`}
+                  />
+                </button>
+              </div>
+              <h3 className="text-sm font-black text-slate-200">{currentCategory}</h3>
+              {/* Progress Bar */}
+              {!learningPathCollapsed && (
+                <div className="pt-2">
+                  <div className="flex justify-between text-[10px] font-bold text-slate-400 mb-1">
+                    <span>Progress</span>
+                    <span>{completedSiblings} / {totalSiblings} Completed</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-[#202020] rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-emerald-500 transition-all duration-500"
+                      style={{ width: `${progressPercentage}%` }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
+            {/* List of siblings */}
+            {!learningPathCollapsed && (
+              <div className="space-y-1 max-h-[300px] overflow-y-auto pr-1">
+                {siblingTopics.map((sibling, index) => {
+                  const isCurrent = sibling.id === topic.id;
+                  const isCompletedSibling = completedTopics[sibling.id]?.completed;
+                  const isLocked = index > 0 && !completedTopics[siblingTopics[index - 1].id]?.completed && !isCompletedSibling && !isCurrent;
+                  
+                  return (
+                    <Link
+                      key={sibling.id}
+                      to={isLocked ? "#" : `/topics/${sibling.id}`}
+                      onClick={(e) => {
+                        if (isLocked) {
+                          e.preventDefault();
+                          toast.info(`Please complete "${siblingTopics[index - 1].title}" first!`);
+                        }
+                      }}
+                      className={`flex items-center justify-between p-2 rounded-lg text-xs font-semibold transition ${
+                        isCurrent
+                          ? "bg-[#1A1A1A] text-blue-400 border border-blue-500/20"
+                          : isLocked
+                          ? "opacity-40 cursor-not-allowed text-slate-500"
+                          : "text-slate-400 hover:bg-[#151515] hover:text-slate-200"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 truncate">
+                        {isCompletedSibling ? (
+                          <CheckCircle className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
+                        ) : isCurrent ? (
+                          <span className="w-3.5 h-3.5 rounded-full border border-blue-500 flex items-center justify-center flex-shrink-0">
+                            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" />
+                          </span>
+                        ) : (
+                          <span className="w-3.5 h-3.5 rounded-full border border-slate-700 flex-shrink-0" />
+                        )}
+                        <span className="truncate">{sibling.title}</span>
+                      </div>
+                      {isLocked && <Lock className="w-3.5 h-3.5 text-slate-550" />}
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Notes widget */}
+        <div className="p-5 rounded-xl glass-card space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-bold flex items-center gap-2">
+              <Edit3 className="w-4 h-4 text-blue-500" /> Quick Topic Notes
+            </h3>
             <button
-              type="submit"
-              disabled={!noteContent.trim()}
-              className="w-full py-2 bg-blue-600 disabled:opacity-55 disabled:cursor-not-allowed hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition flex items-center justify-center gap-1.5"
+              onClick={() => setNotesCollapsed(!notesCollapsed)}
+              className="p-1 rounded text-slate-400 hover:text-slate-200 transition hover:bg-[#151515]"
             >
-              <Save className="w-3.5 h-3.5" /> Save Note
+              <ChevronDown
+                className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                  notesCollapsed ? "" : "rotate-180"
+                }`}
+              />
             </button>
-          </form>
+          </div>
+          {!notesCollapsed && (
+            <form onSubmit={handleSaveNote} className="space-y-3">
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase">
+                  Note Title
+                </label>
+                <input
+                  type="text"
+                  value={noteTitle}
+                  onChange={(e) => setNoteTitle(e.target.value)}
+                  className="w-full mt-1 p-2 rounded-lg border border-slate-200/50 dark:border-[#202020] bg-white dark:bg-[#050505] text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase">
+                  Your Notes (Markdown support)
+                </label>
+                <textarea
+                  rows={8}
+                  value={noteContent}
+                  onChange={(e) => setNoteContent(e.target.value)}
+                  placeholder="Type your notes on this topic. Use markdown formatting like # header or - bullet list."
+                  className="w-full mt-1 p-2 rounded-lg border border-slate-200/50 dark:border-[#202020] bg-white dark:bg-[#050505] max-h-60 min-h-28 text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none font-mono"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase">
+                  Tags (comma separated)
+                </label>
+                <input
+                  type="text"
+                  placeholder="commands, linux, tips"
+                  value={noteTags}
+                  onChange={(e) => setNoteTags(e.target.value)}
+                  className="w-full mt-1 p-2 rounded-lg border border-slate-200/50 dark:border-[#202020] bg-white dark:bg-[#050505] text-xs focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={!noteContent.trim()}
+                className="w-full py-2 bg-blue-600 disabled:opacity-55 disabled:cursor-not-allowed hover:bg-blue-500 text-white font-bold text-xs rounded-lg transition flex items-center justify-center gap-1.5"
+              >
+                <Save className="w-3.5 h-3.5" /> Save Note
+              </button>
+            </form>
+          )}
         </div>
 
         {/* Prerequisites & Details overview panel */}

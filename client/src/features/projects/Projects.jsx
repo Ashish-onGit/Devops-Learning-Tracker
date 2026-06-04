@@ -127,12 +127,12 @@ const Projects = () => {
                 return (
                   <div
                     key={proj.title}
-                    className={`rounded-xl transition overflow-hidden glass-panel ${
+                    className={`rounded-xl transition-all duration-300 overflow-hidden glass-panel border ${
                       isProjectDone
-                        ? "border-emerald-500/35 bg-emerald-500/[0.01]"
+                        ? "border-[#10B981]/50 bg-[#0A0A0A] shadow-md shadow-emerald-950/10 hover:border-[#10B981]/70"
                         : isExpanded
-                          ? "border-blue-500/40"
-                          : ""
+                          ? "border-blue-500/40 bg-[#0A0A0A] hover:border-blue-500/60"
+                          : "border-slate-200/50 dark:border-[#202020] bg-[#0A0A0A] hover:border-slate-350 dark:hover:border-slate-700"
                     }`}
                   >
                     {/* Project Header toggle summary */}
@@ -140,7 +140,7 @@ const Projects = () => {
                       onClick={() =>
                         setExpandedProject(isExpanded ? null : proj.title)
                       }
-                      className="w-full p-5 flex items-center justify-between text-left"
+                      className="w-full p-5 flex items-center justify-between text-left cursor-pointer"
                     >
                       <div className="space-y-1.5 flex-1 pr-4">
                         <div className="flex items-center gap-2">
@@ -156,8 +156,8 @@ const Projects = () => {
                             {proj.category}
                           </span>
                           {isProjectDone && (
-                            <span className="flex items-center gap-0.5 text-[9px] font-bold text-emerald-600 dark:text-emerald-450 bg-emerald-500/10 px-2 py-0.5 rounded">
-                              <Check className="w-3 h-3" /> Finished
+                            <span className="flex items-center gap-1 text-[9px] font-extrabold text-[#FAFAFA] bg-[#10B981] px-2 py-0.5 rounded shadow-sm animate-pulse">
+                              <Check className="w-3 h-3 stroke-[3]" /> Completed Successfully
                             </span>
                           )}
                         </div>
@@ -251,10 +251,20 @@ const Projects = () => {
                           </div>
                         )}
 
+                        {isProjectDone && (
+                          <div className="p-4 rounded-lg bg-[#10B981]/10 border border-[#10B981]/25 flex items-start gap-3 text-slate-300 animate-fadeIn mb-4">
+                            <Check className="w-5 h-5 text-[#10B981] shrink-0 mt-0.5 stroke-[3]" />
+                            <div>
+                              <h5 className="font-extrabold text-[#FAFAFA] text-xs">Achievement Unlocked: Completed Successfully!</h5>
+                              <p className="text-[10px] text-[#A1A1AA] mt-1">You have successfully implemented all architecture steps for this hands-on deployment scenario.</p>
+                            </div>
+                          </div>
+                        )}
+
                         {/* Expected outcome & Action */}
                         <div className="space-y-3 pt-3 border-t border-slate-200/50 dark:border-[#202020] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                           <div className="flex-1">
-                            <h4 className="font-bold text-slate-750 dark:text-slate-350">
+                            <h4 className="font-bold text-slate-750 dark:text-slate-355">
                               Expected Outcome
                             </h4>
                             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
@@ -266,16 +276,23 @@ const Projects = () => {
                             onClick={() =>
                               handleToggleProjectComplete(proj.title)
                             }
-                             className={`px-5 py-2.5 rounded-lg font-bold text-xs shrink-0 flex items-center gap-1.5 transition ${
+                            className={`px-5 py-2.5 rounded-lg font-bold text-xs shrink-0 flex items-center gap-1.5 transition-all duration-300 cursor-pointer ${
                               isProjectDone
-                                ? "bg-emerald-500 text-white shadow-md shadow-emerald-500/10"
-                                : "bg-slate-900 text-white dark:bg-white dark:text-slate-950 hover:opacity-90 dark:bg-[#1A1A1A] dark:text-white"
+                                ? "bg-[#10B981] hover:bg-[#059669] text-[#FAFAFA] shadow-md shadow-emerald-500/20"
+                                : "bg-slate-900 hover:bg-slate-800 text-white dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100 border border-slate-200 dark:border-[#202020]"
                             }`}
                           >
-                            <CheckCircle2 className="w-4 h-4" />
-                            {isProjectDone
-                              ? "Finished Project"
-                              : "Mark Project Finished"}
+                            {isProjectDone ? (
+                              <>
+                                <Check className="w-4 h-4 stroke-[3]" />
+                                <span>Project Completed</span>
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircle2 className="w-4 h-4" />
+                                <span>Mark Project Finished</span>
+                              </>
+                            )}
                           </button>
                         </div>
                       </div>
@@ -296,7 +313,7 @@ const Projects = () => {
               <div className="space-y-3 text-xs">
                 <div className="flex justify-between border-b border-slate-200/50 dark:border-[#202020] pb-2">
                   <span className="text-slate-500">Completed Projects</span>
-                  <span className="font-bold text-emerald-600 dark:text-emerald-450">
+                  <span className="font-bold text-[#10B981]">
                     {completedProjects.length} / {projects.length}
                   </span>
                 </div>

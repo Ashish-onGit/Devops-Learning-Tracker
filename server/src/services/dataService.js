@@ -19,6 +19,81 @@ const getDbStatus = () => {
   return dbConnected;
 };
 
+const generateFallbackContent = (topicId, topicTitle, category) => {
+  return {
+    topicId,
+    overview: `Comprehensive guide to ${topicTitle} in DevOps environments.`,
+    theory: `${topicTitle} is a core competency under the ${category} category in modern DevOps engineering.\n\nIt establishes the foundations of automated deployment, reliability pipelines, infrastructure repeatability, and cluster scalability.\n\nDevOps practitioners use this framework to increase agility, decrease time-to-market, and enforce configuration compliance across cloud-native platforms.`,
+    visualExplanation: `+---------------------------------------+\n|       Local Developer Workspace       |\n+---------------------------------------+\n                   │\n                   ▼ (Deploy/Sync Command)\n+---------------------------------------+\n|       Target Environment State        |\n+---------------------------------------+`,
+    realWorldExample: `In enterprise production clusters, ${topicTitle} is used to orchestrate application resources, secure credentials, monitor latency, or configure ingress paths dynamically.`,
+    commands: [
+      { command: `${topicId.toLowerCase()} --help`, description: "Display usage guidelines and active parameters" },
+      { command: `${topicId.toLowerCase()} status`, description: "Check current system configuration and running status logs" }
+    ],
+    bestPractices: [
+      `Enforce security baselines and least privilege access early.`,
+      `Version control all configuration parameters and scripts.`,
+      `Implement centralized telemetry logging and tracing.`
+    ],
+    commonMistakes: [
+      `Using default credentials or leaving configurations unencrypted.`,
+      `Hardcoding environmental variables instead of using dynamic parameters.`
+    ],
+    labs: [
+      {
+        title: `${topicTitle} Hands-On Challenge`,
+        steps: [
+          `Verify the installation status using the terminal.`,
+          `Explore the configuration parameters folder.`,
+          `Deploy a sample template resources configuration.`,
+          `Validate active outputs and system diagnostics.`
+        ]
+      }
+    ],
+    miniProject: {
+      title: `${topicTitle} Production Script`,
+      description: `Create a modular script to automate configuration setup and status checks for ${topicTitle}.`,
+      steps: [
+        "Initialize the workspace environment.",
+        "Write the core automation configurations.",
+        "Perform dry-run checks and syntax validation.",
+        "Execute and inspect running outputs."
+      ],
+      solution: `# DevOps Automation Script for ${topicTitle}\necho "Initializing ${topicTitle} configuration..."\n# Automated checks\nexit 0`
+    }
+  };
+};
+
+const generateFallbackQuiz = (topicId, topicTitle) => {
+  return {
+    topicId,
+    questions: [
+      {
+        questionText: `What is the primary role of ${topicTitle} in DevOps architectures?`,
+        options: [
+          "To optimize software delivery speed and reliability",
+          "To serve as a simple database backup storage unit",
+          "To compile programming source code files",
+          "To replace standard security firewalls"
+        ],
+        correctIndex: 0,
+        explanation: `${topicTitle} helps automate operations, scale infrastructure, or deliver secure code pipelines.`
+      },
+      {
+        questionText: `Which of the following is a recommended best practice for ${topicTitle}?`,
+        options: [
+          "Expose all credentials in plain text",
+          "Adhere to the principle of least privilege and automate configurations",
+          "Modify resources manually directly in production consoles",
+          "Avoid using telemetry logging and alert notifications"
+        ],
+        correctIndex: 1,
+        explanation: "Automation, security validation, and least privilege are core to modern DevOps methodologies."
+      }
+    ]
+  };
+};
+
 // =========================================================================
 // TOPICS MODULE
 // =========================================================================
@@ -34,19 +109,37 @@ const getTopicById = async (id) => {
   if (dbConnected) {
     const topic = await Topic.findOne({ id });
     if (!topic) return null;
-    const content = await TopicContent.findOne({ topicId: id });
-    const quiz = await Quiz.findOne({ topicId: id });
+    let content = await TopicContent.findOne({ topicId: id });
+    let quiz = await Quiz.findOne({ topicId: id });
+
+    // Generate fallbacks if missing
+    if (!content) {
+      content = generateFallbackContent(id, topic.title, topic.category);
+    }
+    if (!quiz) {
+      quiz = generateFallbackQuiz(id, topic.title);
+    }
+
     return {
       ...topic.toObject(),
-      content: content ? content.toObject() : null,
-      quiz: quiz ? quiz.toObject() : null
+      content: content ? (content.toObject ? content.toObject() : content) : null,
+      quiz: quiz ? (quiz.toObject ? quiz.toObject() : quiz) : null
     };
   }
   
   const topic = seedData.topics.find(t => t.id === id);
   if (!topic) return null;
-  const content = seedData.topicContents.find(c => c.topicId === id);
-  const quiz = seedData.quizzes.find(q => q.topicId === id);
+  let content = seedData.topicContents.find(c => c.topicId === id);
+  let quiz = seedData.quizzes.find(q => q.topicId === id);
+
+  // Generate fallbacks if missing
+  if (!content) {
+    content = generateFallbackContent(id, topic.title, topic.category);
+  }
+  if (!quiz) {
+    quiz = generateFallbackQuiz(id, topic.title);
+  }
+
   return {
     ...topic,
     content: content || null,

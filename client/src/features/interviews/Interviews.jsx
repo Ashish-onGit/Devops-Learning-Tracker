@@ -258,7 +258,8 @@ const Interviews = () => {
                         e.stopPropagation();
                         handleRevealToggle(idx);
                       }}
-                      className="px-3 py-1.5 rounded bg-slate-150 hover:bg-slate-200 dark:bg-[#111111] dark:hover:bg-[#151515] text-[10px] font-bold text-slate-600 dark:text-slate-350 flex items-center gap-1.5 border border-slate-200/50 dark:border-[#202020]"
+                      
+                      className="px-3 py-1.5 rounded bg-slate-150 hover:bg-slate-200 dark:bg-[#202020] dark:hover:bg-[#151515] text-[10px] font-bold text-slate-600 dark:text-zinc-300 flex items-center gap-1.5 border border-slate-200/50 dark:border-[#202020]"
                     >
                       {isRevealed ? (
                         <>
@@ -266,6 +267,7 @@ const Interviews = () => {
                         </>
                       ) : (
                         <>
+                        
                           <Eye className="w-3.5 h-3.5" /> Reveal Model Answer
                         </>
                       )}

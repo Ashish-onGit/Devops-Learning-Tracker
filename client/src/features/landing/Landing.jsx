@@ -93,7 +93,7 @@ const Landing = () => {
   return (
     <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen selection:bg-blue-600 selection:text-white font-sans">
       {/* Navbar overlay */}
-      <nav className="h-16 flex items-center justify-between px-6 md:px-12 border-b border-slate-200/50 dark:border-slate-800/50 glass-nav sticky top-0 z-35">
+      <nav className="h-16 flex items-center justify-between px-6 md:px-12 border-b border-slate-200/50 dark:border-slate-800/50 glass-nav sticky top-0 z-50">
         <div className="flex items-center gap-2">
           <span className="p-2 rounded-lg bg-blue-600 text-white font-bold text-sm shadow-md shadow-blue-500/20">
             DC
@@ -311,7 +311,7 @@ const Landing = () => {
       </section>
 
       {/* CTA Footer */}
-      <section className="py-16 text-center bg-blue-600 text-white px-6">
+      <section className="py-16 text-center glass-card-footer text-white px-6 rounded-t-3xl">
         <div className="max-w-4xl mx-auto space-y-6">
           <h2 className="text-3xl font-black">
             Accelerate Your DevOps Career Readiness Today

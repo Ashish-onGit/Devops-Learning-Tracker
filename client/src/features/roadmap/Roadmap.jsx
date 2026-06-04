@@ -431,9 +431,21 @@ const Roadmap = () => {
                     {gamification.xpNeededForNext === Infinity ? 'MAX Level reached' : `${gamification.xpInCurrentLevel}/${gamification.xpNeededForNext} XP to Next Level`}
                   </span>
                 </div>
-                <div className="h-2 w-full bg-slate-950 rounded-full overflow-hidden border border-slate-800/40">
-                  <div className="h-full bg-gradient-to-r from-blue-600 to-indigo-500 transition-all duration-300" style={{ width: `${gamification.levelProgressPct}%` }} />
-                </div>
+               <div className="
+  h-2 w-full rounded-full overflow-hidden border
+  bg-zinc-100 border-zinc-200
+  dark:bg-zinc-950 dark:border-zinc-800
+">
+  <div
+    className="
+      h-full transition-all duration-300
+      bg-gradient-to-r
+      from-indigo-500 to-blue-600
+      dark:from-indigo-400 dark:to-blue-500
+    "
+    style={{ width: `${gamification.levelProgressPct}%` }}
+  />
+</div>
               </div>
 
               {/* Stats overview */}
@@ -456,41 +468,110 @@ const Roadmap = () => {
             {/* Column 2: Progress Ring & Next Recommendation */}
             <div className="p-5 glass-card flex items-center justify-between gap-4">
               {/* Circular progress SVG */}
-              <div className="relative w-20 h-20 shrink-0">
-                <svg className="w-full h-full transform -rotate-90">
-                  <circle cx="40" cy="40" r="34" className="stroke-slate-950 fill-none" strokeWidth="6" />
-                  <circle 
-                    cx="40" 
-                    cy="40" 
-                    r="34" 
-                    className="stroke-blue-600 fill-none transition-all duration-500" 
-                    strokeWidth="6" 
-                    strokeDasharray="213.6"
-                    strokeDashoffset={213.6 - (213.6 * completionPct) / 100}
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
-                  <span className="text-xs font-black text-slate-200">{completionPct}%</span>
-                  <span className="text-[7px] text-slate-500 font-bold uppercase mt-0.5">Mastery</span>
-                </div>
-              </div>
+             <div className="relative w-20 h-20 shrink-0">
+  <svg className="w-full h-full -rotate-90">
+    {/* Track */}
+    <circle
+      cx="40"
+      cy="40"
+      r="34"
+      className="
+        fill-none
+        stroke-zinc-200
+        dark:stroke-zinc-900
+      "
+      strokeWidth="6"
+    />
+
+    {/* Progress */}
+    <circle
+      cx="40"
+      cy="40"
+      r="34"
+      className="
+        fill-none
+        stroke-indigo-500
+        dark:stroke-indigo-400
+        transition-all duration-500
+      "
+      strokeWidth="6"
+      strokeDasharray="213.6"
+      strokeDashoffset={213.6 - (213.6 * completionPct) / 100}
+      strokeLinecap="round"
+    />
+  </svg>
+
+  <div className="absolute inset-0 flex flex-col items-center justify-center leading-none">
+    <span
+      className="
+        text-xs font-black
+        text-zinc-900
+        dark:text-zinc-50
+      "
+    >
+      {completionPct}%
+    </span>
+
+    <span
+      className="
+        text-[7px] font-semibold uppercase tracking-wider mt-1
+        text-zinc-500
+        dark:text-zinc-500
+      "
+    >
+      Mastery
+    </span>
+  </div>
+</div>
 
               {/* Recommendation card */}
-              <div className="flex-1 space-y-2 select-none">
-                <span className="text-[8px] bg-indigo-500/10 text-indigo-400 font-bold px-2 py-0.5 rounded uppercase">Recommended Next</span>
-                {nextRecommended ? (
-                  <div 
-                    onClick={() => setSelectedTopic(nextRecommended)}
-                    className="p-2  rounded-lg bg-slate-950 border border-slate-800/50 hover:border-blue-500/35 transition cursor-pointer text-left space-y-1"
-                  >
-                    <p className="text-[11px] font-extrabold text-slate-200 truncate">{nextRecommended.title}</p>
-                    <p className="text-[9px] text-slate-500">{nextRecommended.summary}</p>
-                  </div>
-                ) : (
-                  <p className="text-[11px] text-emerald-500 font-bold">All topics completed! You are DevOps Certified!</p>
-                )}
-              </div>
+<div className="flex-1 space-y-2 select-none">
+  <span className="inline-block text-[8px] font-bold px-2 py-0.5 rounded uppercase
+    bg-indigo-100 text-indigo-700
+    dark:bg-indigo-500/10 dark:text-indigo-400">
+    Recommended Next
+  </span>
+
+  {nextRecommended ? (
+    <div
+      onClick={() => setSelectedTopic(nextRecommended)}
+      className="
+        p-3 rounded-xl border transition-all cursor-pointer text-left space-y-1
+        bg-white border-zinc-200
+        hover:border-indigo-400 hover:shadow-sm
+
+        dark:bg-zinc-950
+        dark:border-zinc-800
+        dark:hover:border-indigo-500/40
+        dark:hover:bg-zinc-900
+      "
+    >
+      <p className="
+        text-[11px] font-extrabold truncate
+        text-zinc-900
+        dark:text-zinc-100
+      ">
+        {nextRecommended.title}
+      </p>
+
+      <p className="
+        text-[10px] 
+        text-zinc-600
+        dark:text-zinc-500
+      ">
+        {nextRecommended.summary}
+      </p>
+    </div>
+  ) : (
+    <p className="
+      text-[11px] font-bold
+      text-emerald-600
+      dark:text-emerald-400
+    ">
+      All topics completed! You are DevOps Certified!
+    </p>
+  )}
+</div>
             </div>
           </div>
 
@@ -502,18 +583,29 @@ const Roadmap = () => {
                 const isUnlocked = badge.checkUnlock();
                 const BadgeIcon = badge.icon;
                 return (
-                  <div 
-                    key={badge.id}
-                    title={`${badge.title}: ${badge.desc}`}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-bold transition select-none ${
-                      isUnlocked 
-                        ? badge.color
-                        : 'text-slate-600 border-slate-900 bg-slate-950 opacity-40'
-                    }`}
-                  >
-                    <BadgeIcon className="w-4 h-4" />
-                    <span>{badge.title}</span>
-                  </div>
+<div
+  key={badge.id}
+  title={`${badge.title}: ${badge.desc}`}
+  className={`flex items-center gap-2 px-3 py-2 rounded-xl border backdrop-blur-sm text-xs font-semibold transition-all duration-200
+    ${
+      isUnlocked
+        ? `
+          ${badge.color}
+          bg-white/80 dark:bg-zinc-900/70
+          border-zinc-200 dark:border-zinc-800
+          hover:scale-105
+        `
+        : `
+          bg-zinc-100/70 dark:bg-zinc-950/50
+          text-zinc-400 dark:text-zinc-600
+          border-zinc-200 dark:border-zinc-900
+          opacity-50
+        `
+    }`}
+>
+  <BadgeIcon className="w-4 h-4" />
+  <span>{badge.title}</span>
+</div>
                 );
               })}
             </div>

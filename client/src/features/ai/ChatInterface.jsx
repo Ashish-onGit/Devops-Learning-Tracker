@@ -182,7 +182,7 @@ const ChatInterface = () => {
               <button
                 key={pIdx}
                 onClick={() => handlePresetClick(preset.text)}
-                className="px-3.5 py-2 rounded-xl border border-slate-200/50 dark:border-[#202020] hover:bg-slate-550 dark:hover:bg-[#151515] text-[11px] font-bold text-slate-600 dark:text-slate-350 transition flex items-center gap-1.5"
+                className="px-3.5 py-2 rounded-xl border border-slate-200/50 dark:border-[#202020] hover:bg-slate-550 dark:hover:bg-[#151515] dark:bg-zinc-800 dark:text-zinc-500  dark:hover:text-zinc-100 text-[11px] font-bold text-slate-600 dark:text-zinc-200 transition flex items-center gap-1.5"
               >
                 <preset.icon className="w-3.5 h-3.5 text-slate-450" />
                 {preset.text}

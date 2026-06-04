@@ -61,7 +61,8 @@ export const AIProvider = ({ children }) => {
 
     try {
       // Query our backend API
-      const res = await axios.post('/api/v1/ai/chat', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+      const res = await axios.post(`${API_BASE_URL}/api/v1/ai/chat`, {
         prompt: promptText,
         context: pageContext
       });

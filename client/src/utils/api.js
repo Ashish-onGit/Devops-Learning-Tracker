@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { seedData } from './seedData';
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api/v1';
-
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+const API_BASE = `${API_BASE_URL}/api/v1`;
 
 const apiClient = axios.create({
   baseURL: API_BASE,

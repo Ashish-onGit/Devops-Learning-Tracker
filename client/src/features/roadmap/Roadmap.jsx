@@ -351,9 +351,9 @@ const Roadmap = () => {
   return (
     <div className="space-y-6 max-w-6xl mx-auto pb-12">
       {/* Title & View Filters */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4">
         <div>
-          <h2 className="text-2xl font-black tracking-tight text-slate-100">DevOps Learning Journey</h2>
+          <h2 className="text-2xl font-black tracking-tight text-slate-800 dark:text-slate-100">DevOps Learning Journey</h2>
           <p className="text-xs text-slate-500">Earn XP, level up, unlock achievement badges, and master infrastructure engineering step-by-step.</p>
         </div>
         

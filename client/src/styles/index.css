@@ -121,6 +121,17 @@ textarea:focus-visible {
 
 /* Roadmap Grid-Mesh Background styling */
 .roadmap-mesh-container {
+  background-color: #f8fafc !important;
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(59, 130, 246, 0.03) 0px, transparent 50%),
+    radial-gradient(at 85% 45%, rgba(139, 92, 246, 0.03) 0px, transparent 50%),
+    radial-gradient(at 35% 85%, rgba(16, 185, 129, 0.03) 0px, transparent 50%),
+    linear-gradient(to right, rgba(226, 232, 240, 0.8) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(226, 232, 240, 0.8) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px !important;
+}
+
+.dark .roadmap-mesh-container {
   background-color: #000000 !important;
   background-image: 
     radial-gradient(at 15% 15%, rgba(59, 130, 246, 0.05) 0px, transparent 50%),
@@ -128,7 +139,6 @@ textarea:focus-visible {
     radial-gradient(at 35% 85%, rgba(16, 185, 129, 0.04) 0px, transparent 50%),
     linear-gradient(to right, rgba(32, 32, 32, 0.18) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(32, 32, 32, 0.18) 1px, transparent 1px) !important;
-  background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 40px 40px !important;
 }
 
 /* Roadmap Glowing Milestone Nodes */
